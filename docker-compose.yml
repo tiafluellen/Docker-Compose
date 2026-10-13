@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - recipe-data:/app/data
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:5001
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: http://localhost:5001
+
+volumes:
+  recipe-data:
